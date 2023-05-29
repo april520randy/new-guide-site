@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="tipline">
       <img
-        src="@/assets/img/Group 6@2x.png"
+        src="@/assets/img/Group@2x.png"
         alt=""
         style="width: 102rem; height: 17rem"
       />

@@ -24,7 +24,7 @@
               <img
                 v-for="num in 5"
                 :key="num"
-                src="@/assets/img/Star 5@2x.png"
+                src="@/assets/img/Star@2x.png"
                 alt=""
                 style="width: 16rem; height: 16rem"
               />
