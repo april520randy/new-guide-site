@@ -3,15 +3,21 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite --mode dev  --host 0.0.0.0",
+    "build": "vite build --mode prod",
+    "build:test": "vite build --mode test",
+    "build:prod": "vite build --mode prod",
     "preview": "vite preview"
   },
   "dependencies": {
+    "html-webpack-plugin": "^5.5.1",
+    "sass": "^1.62.1",
+    "vant": "^4.4.1",
     "vue": "^3.3.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "unplugin-vue-components": "^0.24.1",
     "vite": "^4.3.5"
   }
 }
