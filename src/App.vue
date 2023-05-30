@@ -27,7 +27,7 @@
   <Loading v-if="loading" />
 </template>
 <script setup>
-import { prefixUrl,getMobilePlatform } from "@/assets/js/utils";
+import { prefixUrl, getMobilePlatform } from "@/assets/js/utils";
 import SportList from "@/components/SportList/SportList";
 import AIAssert from "@/components/AIAssert/AIAssert";
 import ActivityList from "@/components/ActivityList/ActivityList";
@@ -80,75 +80,24 @@ onMounted(async () => {
 // 获取轮播列表
 function fetchBannerList() {
   let url = `${BASE_URL}/bphyh`;
-  return Promise.resolve({
-    code: 200,
-    data: {
-      records: [
-        {
-          img: "",
-          link: "google.com",
-        },
-      ],
-    },
-  });
   return fetch(url).then((res) => res.json());
 }
 // 获取体育列表
 function fetchSportList() {
-  let url = `${BASE_URL}/bphyhb`;
-  return Promise.resolve({
-    code: 200,
-    data: {
-      records: [
-        {
-          bid: "1661993864026402818",
-          logo: "tenant/1685086191911.png",
-          registerHandsel: "11",
-          otherHandsel: "232",
-          sort: "5",
-          bbannerBtn2Link: "youtube.com",
-          bbannerContent: "K体育首次注册赢大奖",
-          bbannerBtnLink: "baidu.com",
-          bbannerBtnCount: 1,
-          bbannerBtn2Count: 1,
-          btype: "4",
-          bbannerBtn2: "youtube.com",
-          bbannerTitle: "K体育",
-          bbannerBtn: "google.com",
-          bbannerId: "1e0197ca",
-          bstatus: 1,
-        },
-        {
-          bid: "1662012984210042881",
-          logo: "tenant/1685089748793.png",
-          registerHandsel: "88",
-          otherHandsel: "18888",
-          sort: "2",
-          bbannerBtn2Link: "http://www.youtube.com",
-          bbannerBtnLink: "youtube.com",
-          bbannerBtnCount: 4,
-          bbannerBtn2Count: 1,
-          btype: "1",
-          bbannerBtn2: "google.com",
-          bbannerTitle: "B体育",
-          bbannerBtn: "baidu.com",
-          bbannerId: "1e0197ca",
-          bstatus: 1,
-        },
-      ],
-    },
-  });
+  let url = `${BASE_URL}/bphy`;
   return fetch(url).then((res) => res.json());
 }
 // 获取活动列表
 function fetchActivityList() {
-  let url = `${BASE_URL}/test`;
+  let url = `${BASE_URL}/phyact`;
   return fetch(url).then((res) => res.json());
 }
 // 点击轮播banner
 const onClickBanner = (item) => {
   console.log(item);
-  window.location.href = prefixUrl(item.link);
+  if (item.bannerTopLink) {
+    window.location.href = prefixUrl(item.bannerTopLink);
+  }
 };
 
 // 统计，点击注册
@@ -165,7 +114,9 @@ function download(item) {
 
 // 点击活动
 const onClickActivity = (item) => {
-  window.location.href = prefixUrl(item.link);
+  if (item.actBannerBtnLink) {
+    window.location.href = prefixUrl(item.actBannerBtnLink);
+  }
 };
 
 function showLoading() {
@@ -211,20 +162,5 @@ function statistics(type) {
   background-size: 100%;
   background-attachment: fixed;
 }
-.my-swipe {
-  border-radius: 10px;
-  overflow: hidden;
-  .van-swipe-item {
-    color: #fff;
-    font-size: 20px;
-    line-height: 150px;
-    text-align: center;
-    background-color: #39a9ed;
 
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
 </style>

@@ -16,7 +16,11 @@
       v-for="item in list"
       :key="item.id"
     >
-      <div id="bottom-title1">{{ getTitle(item.title) }}</div>
+      <div
+        class="van-ellipsis"
+        id="bottom-title1"
+        v-html="getTitle(item.actBannerTitle)"
+      ></div>
       <div id="bottom-btn1" class="item-btn btn-color">立即领取</div>
     </div>
   </div>
@@ -60,6 +64,7 @@ const getTitle = (title) => {
 
     .item-btn {
       width: 99rem;
+      flex: 0 0 99rem;
       height: 32rem;
       line-height: 32rem;
       text-align: center;
