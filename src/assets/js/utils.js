@@ -19,5 +19,9 @@ export function getMobilePlatform() {
 }
 
 export function getImageUrl(src) {
-  return import.meta.env.VITE_API_URL + "/assets/" + src;
+  if (src.includes("http")) {
+    return src;
+  } else {
+    return import.meta.env.VITE_API_URL + "/assets/" + src;
+  }
 }

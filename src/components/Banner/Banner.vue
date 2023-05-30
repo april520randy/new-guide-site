@@ -5,7 +5,7 @@
       v-for="item in list"
       :key="item.id"
     >
-      <img :src="getImageUrl(item.imgPhone)" />
+      <img :src="getImageUrl(item.logo)" />
     </van-swipe-item>
   </van-swipe>
 </template>
