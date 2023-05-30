@@ -45,17 +45,17 @@ const activityList = ref([]);
 
 onMounted(async () => {
   // 统计页面浏览次数
-  // statistics("init");
+  statistics("init");
   showLoading();
   try {
     const { code, data } = await fetchBannerList();
 
     if (code === ERR_OK) {
-      bannerList.value = data.records;
+      bannerList.value = data.records.filter((item) => item.phyStatus);
     }
     const res = await fetchSportList();
     if (res.code === ERR_OK) {
-      let list = res.data.records;
+      let list = res.data.records || [];
       console.log(list);
       list = list.filter((item) => item.bstatus); // 可见
       list.sort((a, b) => a.sort - b.sort); // 排序
@@ -70,7 +70,9 @@ onMounted(async () => {
   try {
     const res2 = await fetchActivityList();
     if (res2.code === ERR_OK) {
-      activityList.value = res2.data.records;
+      let list = res2.data.records || [];
+
+      activityList.value = list.filter((item) => item.actBannerStatus);
     }
   } catch (err) {
     console.log(err.message);
@@ -103,13 +105,13 @@ const onClickBanner = (item) => {
 // 统计，点击注册
 function register(item) {
   // 统计 点击注册次数
-  // statistics('register'); // 统计
-  window.location.href = prefixUrl(item.bbannerBtn);
+  let url = prefixUrl(item.bbannerBtn);
+  statistics("register", url);
 }
 function download(item) {
   // 统计 APP下载次数
-  // statistics('download'); // 统计
-  window.location.href = prefixUrl(getDownloadUrl(item));
+  let url = prefixUrl(getDownloadUrl(item));
+  statistics("download", url);
 }
 
 // 点击活动
@@ -134,24 +136,37 @@ function getDownloadUrl({ bbannerBtnLink, bbannerBtn2Link }) {
     return bbannerBtn2Link;
   }
 }
-function statistics(type) {
-  let data = {
-    type,
-  };
-  fetch(`${BASE_URL}/bphy/updateCount`, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => {
-      // 处理响应
+function statistics(type, url) {
+  if (url) {
+    showLoadingToast();
+  }
+  return fetch(`${BASE_URL}/bphyh/page?type=${type}`)
+    .then(() => {
+      closeToast();
+      if (url) {
+        window.location.href = url;
+      }
     })
-    .catch((error) => {
-      // 处理错误
+    .catch((err) => {
+      closeToast();
+      if (url) {
+        window.location.href = url;
+      }
     });
-  console.log(data);
+  // fetch(`${BASE_URL}/bphy/updateCount`, {
+  //   method: "post",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(data),
+  // })
+  //   .then((response) => {
+  //     // 处理响应
+  //   })
+  //   .catch((error) => {
+  //     // 处理错误
+  //   });
+  // console.log(data);
 }
 </script>
 <style lang="scss">
@@ -162,5 +177,4 @@ function statistics(type) {
   background-size: 100%;
   background-attachment: fixed;
 }
-
 </style>

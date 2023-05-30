@@ -13,13 +13,13 @@
     <div
       @click="onClickActivity(item)"
       class="item"
-      v-for="item in list"
+      v-for="(item, idx) in list"
       :key="item.id"
     >
       <div
         class="van-ellipsis"
         id="bottom-title1"
-        v-html="getTitle(item.actBannerTitle)"
+        v-html="getTitle(item.actBannerTitle, idx)"
       ></div>
       <div id="bottom-btn1" class="item-btn btn-color">立即领取</div>
     </div>
@@ -37,9 +37,13 @@ const emit = defineEmits(["onClickActivity"]);
 const onClickActivity = (item) => {
   emit("onClickActivity", item);
 };
-const getTitle = (title) => {
+const getTitle = (title, idx) => {
+  const color = idx % 2 === 0 ? "#FF0000" : "#C03BFF";
   if (title) {
-    title = title.replace(/(\d+%*)/g, '<span  style="color:#FF0000">$&</span>');
+    title = title.replace(
+      /(\d+%*)/g,
+      `<span  style="color:${color}">$&</span>`
+    );
   }
   return title;
 };
