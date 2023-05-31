@@ -140,7 +140,7 @@ function statistics(type, url) {
   if (url) {
     showLoadingToast();
   }
-  return fetch(`${BASE_URL}/bphyh/page?type=${type}`)
+  return fetch(`${BASE_URL}/sys/sysviewcount?type=${type}`)
     .then(() => {
       closeToast();
       if (url) {
