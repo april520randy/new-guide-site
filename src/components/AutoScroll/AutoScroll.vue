@@ -100,7 +100,7 @@
       }
     }
     .list-wrapper {
-      height: 220px;
+      height: 220rem;
       overflow: hidden;
       .s-list {
         animation: scrollAnimation 20s linear infinite;

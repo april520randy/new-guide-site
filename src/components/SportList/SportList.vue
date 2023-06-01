@@ -49,20 +49,26 @@
           class="register bot-btn"
           >立即注册</a
         >
-        <a
-          @click="download(item)"
-          href="javascript:;"
-          :class="item.btype === '2' ? 'black' : ''"
-          class="download bot-btn"
-          >APP下载</a
-        >
+
+        <van-popover placement="top" v-model:show="item.showPopover">
+          <!-- <div class="qr-code-wrapper">test</div> -->
+          <template #reference>
+            <a
+              @click="download(item)"
+              href="javascript:;"
+              :class="item.btype === '2' ? 'black' : ''"
+              class="download bot-btn"
+              >APP下载</a
+            >
+          </template>
+        </van-popover>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { getImageUrl } from "@/assets/js/utils";
+import { getImageUrl, isPC } from "@/assets/js/utils";
 defineProps({
   list: {
     type: Array,
@@ -74,7 +80,11 @@ function register(item) {
   emit("register", item);
 }
 function download(item) {
-  emit("download", item);
+  if (isPC()) {
+    // 处理pc
+  } else {
+    emit("download", item);
+  }
 }
 function isBSport(item) {
   return item.btype !== "1";
@@ -156,6 +166,7 @@ const getTypeClassName = (type) => {
       font-weight: 600;
 
       .bot-btn {
+        display: inline-block;
         width: 168rem;
         height: 40rem;
         line-height: 40rem;
@@ -173,7 +184,7 @@ const getTypeClassName = (type) => {
     .guan-name {
       width: 36rem;
       height: 22rem;
-      line-height: 22px;
+      line-height: 22rem;
       border-radius: 10rem;
       text-align: center;
     }

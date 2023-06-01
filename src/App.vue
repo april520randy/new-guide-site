@@ -1,33 +1,35 @@
 <template>
-  <!-- banner -->
-  <Banner
-    v-if="bannerList.length"
-    @onClickBanner="onClickBanner"
-    :list="bannerList"
-  />
-  <!-- 体育列表 -->
-  <SportList
-    @download="download"
-    @register="register"
-    v-if="sportList.length"
-    :list="sportList"
-  />
+  <div class="container">
+    <!-- banner -->
+    <Banner
+      v-if="bannerList.length"
+      @onClickBanner="onClickBanner"
+      :list="bannerList"
+    />
+    <!-- 体育列表 -->
+    <SportList
+      @download="download"
+      @register="register"
+      v-if="sportList.length"
+      :list="sportList"
+    />
 
-  <!-- AI预测 -->
-  <AIAssert />
-  <!-- 自动滚动 -->
-  <AutoScroll />
-  <!-- 活动列表 -->
-  <ActivityList
-    v-if="activityList.length"
-    @onClickActivity="onClickActivity"
-    :list="activityList"
-  />
-  <!-- loading -->
-  <Loading v-if="loading" />
+    <!-- AI预测 -->
+    <AIAssert />
+    <!-- 自动滚动 -->
+    <AutoScroll />
+    <!-- 活动列表 -->
+    <ActivityList
+      v-if="activityList.length"
+      @onClickActivity="onClickActivity"
+      :list="activityList"
+    />
+    <!-- loading -->
+    <Loading v-if="loading" />
+  </div>
 </template>
 <script setup>
-import { prefixUrl, getMobilePlatform } from "@/assets/js/utils";
+import { prefixUrl, getMobilePlatform,  } from "@/assets/js/utils";
 import SportList from "@/components/SportList/SportList";
 import AIAssert from "@/components/AIAssert/AIAssert";
 import ActivityList from "@/components/ActivityList/ActivityList";
@@ -104,14 +106,13 @@ const onClickBanner = (item) => {
 
 // 统计，点击注册
 function register(item) {
-  // 统计 点击注册次数
   let url = prefixUrl(item.bbannerBtn);
   statistics("register", url);
 }
 function download(item) {
-  // 统计 APP下载次数
   let url = prefixUrl(getDownloadUrl(item));
-  statistics("download", url);
+    statistics("download", url);
+  
 }
 
 // 点击活动
@@ -176,5 +177,11 @@ function statistics(type, url) {
   background: url("@/assets/img/headbg.png") no-repeat center top;
   background-size: 100%;
   background-attachment: fixed;
+}
+</style>
+<style lang="scss">
+.container {
+  max-width: 800px;
+  margin: 0 auto;
 }
 </style>
