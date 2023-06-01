@@ -140,7 +140,7 @@ function statistics(type, url) {
   if (url) {
     showLoadingToast();
   }
-  return fetch(`${BASE_URL}/sys/sysviewcount?type=${type}`)
+  return fetch(`${BASE_URL}/bphyh/page?type=${type}`)
     .then(() => {
       closeToast();
       if (url) {
@@ -153,20 +153,6 @@ function statistics(type, url) {
         window.location.href = url;
       }
     });
-  // fetch(`${BASE_URL}/bphy/updateCount`, {
-  //   method: "post",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(data),
-  // })
-  //   .then((response) => {
-  //     // 处理响应
-  //   })
-  //   .catch((error) => {
-  //     // 处理错误
-  //   });
-  // console.log(data);
 }
 </script>
 <style lang="scss">
