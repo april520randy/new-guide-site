@@ -140,7 +140,7 @@ function hideLoading() {
   background-size: 100%;
   background-attachment: fixed;
   &.is-pc {
-    background: #e1f1fc;
+    background: rgb(213, 240, 251);
     padding-top: 10rem;
   }
 }
