@@ -153,6 +153,20 @@ function statistics(type, url) {
         window.location.href = url;
       }
     });
+  // fetch(`${BASE_URL}/bphy/updateCount`, {
+  //   method: "post",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(data),
+  // })
+  //   .then((response) => {
+  //     // 处理响应
+  //   })
+  //   .catch((error) => {
+  //     // 处理错误
+  //   });
+  // console.log(data);
 }
 </script>
 <style lang="scss">

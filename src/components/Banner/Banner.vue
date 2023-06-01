@@ -1,5 +1,5 @@
 <template>
-  <van-swipe class="my-swipe" :autoplay="3000" lazy-render height="160">
+  <van-swipe class="my-swipe" :autoplay="3000" lazy-render>
     <van-swipe-item
       @click="onClickBanner(item)"
       v-for="item in list"
@@ -31,13 +31,12 @@ const onClickBanner = (item) => {
   .van-swipe-item {
     color: #fff;
     font-size: 20px;
-    line-height: 150px;
     text-align: center;
     background-color: #39a9ed;
 
     img {
+      display: block;
       width: 100%;
-      height: 100%;
     }
   }
 }
