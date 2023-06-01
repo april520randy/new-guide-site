@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "html-webpack-plugin": "^5.5.1",
+    "qrcode2": "^1.2.3",
     "sass": "^1.62.1",
     "vant": "^4.4.1",
     "vue": "^3.3.2"

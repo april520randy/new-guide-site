@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :class="isPC() ? 'is-pc' : 'is-h5'">
     <!-- banner -->
     <Banner
       v-if="bannerList.length"
@@ -29,14 +29,15 @@
   </div>
 </template>
 <script setup>
-import { prefixUrl, getMobilePlatform,  } from "@/assets/js/utils";
+import { prefixUrl, isPC } from "@/assets/js/utils";
 import SportList from "@/components/SportList/SportList";
 import AIAssert from "@/components/AIAssert/AIAssert";
 import ActivityList from "@/components/ActivityList/ActivityList";
 import Loading from "@/components/Loading/Loading";
 import "vant/es/toast/style";
 import { ref, onMounted } from "vue";
-import { showToast, showLoadingToast, closeToast } from "vant";
+import { showToast } from "vant";
+import { statistics } from "@/hooks/statistics";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 const ERR_OK = 200;
@@ -109,10 +110,9 @@ function register(item) {
   let url = prefixUrl(item.bbannerBtn);
   statistics("register", url);
 }
-function download(item) {
-  let url = prefixUrl(getDownloadUrl(item));
-    statistics("download", url);
-  
+function download(url) {
+  url = prefixUrl(url);
+  statistics("download", url);
 }
 
 // 点击活动
@@ -128,60 +128,20 @@ function showLoading() {
 function hideLoading() {
   loading.value = false;
 }
-
-function getDownloadUrl({ bbannerBtnLink, bbannerBtn2Link }) {
-  let platform = getMobilePlatform();
-  if (platform === "IOS") {
-    return bbannerBtnLink;
-  } else {
-    return bbannerBtn2Link;
-  }
-}
-function statistics(type, url) {
-  if (url) {
-    showLoadingToast();
-  }
-  return fetch(`${BASE_URL}/bphyh/page?type=${type}`)
-    .then(() => {
-      closeToast();
-      if (url) {
-        window.location.href = url;
-      }
-    })
-    .catch((err) => {
-      closeToast();
-      if (url) {
-        window.location.href = url;
-      }
-    });
-  // fetch(`${BASE_URL}/bphy/updateCount`, {
-  //   method: "post",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(data),
-  // })
-  //   .then((response) => {
-  //     // 处理响应
-  //   })
-  //   .catch((error) => {
-  //     // 处理错误
-  //   });
-  // console.log(data);
-}
 </script>
+<style lang="scss"></style>
 <style lang="scss">
-#app {
-  padding: 50rem 12rem 55rem;
+.container {
   min-height: 100vh;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 50rem 12rem 55rem;
   background: url("@/assets/img/headbg.png") no-repeat center top;
   background-size: 100%;
   background-attachment: fixed;
-}
-</style>
-<style lang="scss">
-.container {
-  max-width: 800px;
-  margin: 0 auto;
+  &.is-pc {
+    background: #e1f1fc;
+    padding-top: 10rem;
+  }
 }
 </style>

@@ -49,12 +49,21 @@
           class="register bot-btn"
           >立即注册</a
         >
-
-        <van-popover placement="top" v-model:show="item.showPopover">
-          <!-- <div class="qr-code-wrapper">test</div> -->
+        <a
+          v-if="!isPC()"
+          @click="download(getDownloadUrl(item))"
+          href="javascript:;"
+          :class="item.btype === '2' ? 'black' : ''"
+          class="download bot-btn"
+          >APP下载</a
+        >
+        <van-popover v-else placement="top" v-model:show="item.showPopover">
+          <div class="qr-code-wrapper">
+            <QrCode :size="150" :link="getDownloadUrl(item)" />
+          </div>
           <template #reference>
             <a
-              @click="download(item)"
+              @click="pcDownload(item.showPopover)"
               href="javascript:;"
               :class="item.btype === '2' ? 'black' : ''"
               class="download bot-btn"
@@ -68,7 +77,9 @@
 </template>
 
 <script setup>
-import { getImageUrl, isPC } from "@/assets/js/utils";
+import QrCode from "@/components/QrCode/QrCode.vue";
+import { getImageUrl, isPC, getMobilePlatform } from "@/assets/js/utils";
+import { statistics } from "@/hooks/statistics";
 defineProps({
   list: {
     type: Array,
@@ -79,11 +90,12 @@ const emit = defineEmits(["register", "download"]);
 function register(item) {
   emit("register", item);
 }
-function download(item) {
-  if (isPC()) {
-    // 处理pc
-  } else {
-    emit("download", item);
+function download(url) {
+  emit("download", url);
+}
+function pcDownload(bool) {
+  if (!bool) {
+    statistics("download");
   }
 }
 function isBSport(item) {
@@ -103,16 +115,24 @@ const getTypeClassName = (type) => {
       return "b-sport";
   }
 };
+
+function getDownloadUrl({ bbannerBtnLink, bbannerBtn2Link }) {
+  let platform = getMobilePlatform();
+  if (platform === "IOS") {
+    return bbannerBtnLink;
+  } else {
+    return bbannerBtn2Link;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .box-mid {
   .box-item {
-    // width: 366rem;
-    height: 140rem;
+    // height: 140rem;
     background-color: #fff;
     border-radius: 15rem;
-    margin-top: 21rem;
+    margin-top: 15rem;
     padding: 13rem 10rem;
     box-sizing: border-box;
 
@@ -232,5 +252,9 @@ const getTypeClassName = (type) => {
       }
     }
   }
+}
+.qr-code-wrapper {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  padding: 10px;
 }
 </style>
