@@ -37,7 +37,7 @@
             流水+包赔&nbsp;<text>累计可拿{{ item.otherHandsel }}元</text>
           </div>
           <div v-else class="main-mes" style="font-size: 13rem">
-            每周<text>{{ item.otherHandsel }}元</text>
+            每周<text>任领{{ item.otherHandsel }}元</text>
           </div>
         </div>
       </div>
@@ -59,7 +59,14 @@
         >
         <van-popover v-else placement="top" v-model:show="item.showPopover">
           <div class="qr-code-wrapper">
-            <QrCode :size="150" :link="getDownloadUrl(item)" />
+            <div class="item">
+              <QrCode :size="120" :link="item.bbannerBtnLink" />
+              <p>IOS</p>
+            </div>
+            <div class="item">
+              <QrCode :size="120" :link="item.bbannerBtn2Link" />
+              <p>Android</p>
+            </div>
           </div>
           <template #reference>
             <a
@@ -256,5 +263,14 @@ function getDownloadUrl({ bbannerBtnLink, bbannerBtn2Link }) {
 .qr-code-wrapper {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   padding: 10px;
+  display: flex;
+  .item {
+    text-align: center;
+    margin-right: 20px;
+    p{
+      font-size:20px;
+      font-weight: 600;
+    }
+  }
 }
 </style>
