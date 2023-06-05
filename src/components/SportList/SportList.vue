@@ -34,10 +34,13 @@
             新人注册即&nbsp;<text>送{{ item.registerHandsel }}元</text>
           </div>
           <div v-if="isBSport(item)" class="main-mes">
-            流水+包赔&nbsp;<text>累计可拿{{ item.otherHandsel }}元</text>
+            每周无忧享受&nbsp;<text>{{ item.otherHandsel }}元</text>
           </div>
-          <div v-else class="main-mes" style="font-size: 13rem">
-            每周<text>任领{{ item.otherHandsel }}元</text>
+          <div v-if="isMLSport(item)" class="main-mes" style="font-size: 13rem">
+            晋级有好礼<text>最高获得{{ item.otherHandsel }}元</text>
+          </div>
+          <div v-if="isKSport(item)" class="main-mes" style="font-size: 13rem">
+            VIP至臻礼金<text>{{ item.otherHandsel }}元</text>
           </div>
         </div>
       </div>
@@ -106,7 +109,13 @@ function pcDownload(bool) {
   }
 }
 function isBSport(item) {
-  return item.btype !== "1";
+  return item.btype === "1";
+}
+function isMLSport(item){
+  return item.btype === '2'
+}
+function isKSport(item){
+  return item.btype === '4'
 }
 const getTypeClassName = (type) => {
   switch (Number(type)) {
